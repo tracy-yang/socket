@@ -1,16 +1,19 @@
 <template>
-    <div>
-        <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px">
-            <el-form-item label="用户名" prop="userName">
-                <el-input v-model="ruleForm.userName"></el-input>
-            </el-form-item>
-            <el-form-item label="密码" prop="password">
-                <el-input v-model="ruleForm.password" type="password"></el-input>
-            </el-form-item>
-            <el-form-item>
-                <el-button type="primary" @click="login">登陆</el-button>
-            </el-form-item>
-        </el-form>
+    <div class="bg">
+        <div class="form-wrapper">
+            <div  class="title">登陆</div>
+            <el-form :model="ruleForm" :rules="rules" ref="ruleForm"  label-position="left">
+                <el-form-item label="" prop="userName">
+                    <el-input v-model="ruleForm.userName" placeholder="请输入用户名"></el-input>
+                </el-form-item>
+                <el-form-item label="" prop="password">
+                    <el-input v-model="ruleForm.password" type="password" placeholder="请输入密码"></el-input>
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="primary" class="submit" @click="login('ruleForm')">登陆</el-button>
+                </el-form-item>
+            </el-form>
+        </div>
     </div>
 </template>
 
@@ -31,14 +34,26 @@ export default {
                 password:[
                      {required: true, message: '请输入密码', trigger: 'blur' }
                 ]
-            }
+            },
+            name:''
         }
     },
+    created(){
+        console.log(typeof globalLogin) // object
+        this.name = globalLogin.test;
+    },
     methods:{
-        login(){
-            login(this.ruleForm.userName,this.ruleForm.password).then(data =>{
-                
-            })
+        login(formName){
+            this.$refs[formName].validate((valid) => {
+                if (valid) {
+                    login(this.ruleForm.userName,this.ruleForm.password).then(data =>{
+                        console.log(data,3333);
+                    })
+                } else {
+                    console.log('error submit!!');
+                    return false;
+                }
+             });
         },
 
     }
@@ -46,5 +61,36 @@ export default {
 </script>
 
 <style>
+    .bg{
+        background: #f2f2f2;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+    }
+    .title{
+        font-size: 24px;
+        color: #999;
+        padding-bottom: 20px;
+        
+    }
+    .form-wrapper{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        width: 360px;
+        padding:20px;
+        background:#fff;
+        border:solid 1px #ebebeb;
+        border-radius: 4px;
+    }
+    .form-wrapper form{
+        width: 100%;
+    }
+    .submit{
+        width: 100%;
+    }
 
 </style>
