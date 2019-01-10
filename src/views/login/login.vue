@@ -48,6 +48,7 @@ export default {
                 if (valid) {
                     login(this.ruleForm.userName,this.ruleForm.password).then(data =>{
                         console.log(data,3333);
+                        this.$router.push({ name: 'home'});
                     })
                 } else {
                     console.log('error submit!!');
