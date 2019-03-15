@@ -19,6 +19,7 @@
 
 <script>
 import {login} from '../../api/user'
+import { mapState , mapActions } from 'vuex'
 
 export default {
     data(){
@@ -42,12 +43,28 @@ export default {
         console.log(typeof globalLogin) // object
         this.name = globalLogin.test;
     },
+    computed:{
+        userId(){
+            console.log(this.$store.state.user,888)
+            return this.$store.stateuserId;
+        }
+        // ...mapState({
+        //     userId: state => state.user.userId,
+        // }),
+    },
     methods:{
+        ...mapActions([
+            'USERID',
+            'USERNAME',
+            'HEADERIMG'
+        ]),
         login(formName){
+            console.log(this.$store.state.user.userId);
             this.$refs[formName].validate((valid) => {
                 if (valid) {
                     login(this.ruleForm.userName,this.ruleForm.password).then(data =>{
                         console.log(data,3333);
+                        this.$store.dispatch('USERID',data.data.id);
                         this.$router.push({ name: 'home'});
                     })
                 } else {

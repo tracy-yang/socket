@@ -20,11 +20,27 @@
 </template>
 
 <script>
+
 export default {
     data(){
         return {
 
         }
+    },
+    created(){
+        console.log(this.$store.state.user.userId,999);
+    },
+    computed:{
+        userId(){
+            console.log(this.$store.state.user.userId,888);
+            return this.$store.state.user.userId;
+        }
+        // ...mapState({
+        //     userId: state => state.user.userId,
+        // }),
+    },
+    methods:{
+
     }
     
 }

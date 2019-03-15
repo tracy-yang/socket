@@ -9,6 +9,7 @@ import globalLogin from '../config/myPlugin'
 import store from './store/index'
 
 
+
 Vue.config.productionTip = false
 Vue.use(ElementUI);
 Vue.use(globalLogin);
